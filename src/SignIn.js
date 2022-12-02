@@ -15,7 +15,6 @@ function SignIn() {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
-                alert('SignedIn');
                 navigate('/');
             })
             .catch(error => alert(error.message))
@@ -26,7 +25,6 @@ function SignIn() {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 if (userCredentials) {
-                    alert('Account created & SignedIn');
                     navigate('/')
                 }
             })
