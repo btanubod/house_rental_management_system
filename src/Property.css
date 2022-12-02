@@ -7,14 +7,14 @@
     padding: 20px;
     width: 100%;
     max-width: 100%;
-    max-height: 400px;
+    max-height: 850px;
     background-color: white;
     z-index: 1;
 }
 
-.property > img {
-    max-height: 200px;
-    width: 100%;
+.property_image {
+    margin-top: 10px;
+    width: 80%;
     object-fit: contain;
     margin-bottom: 15px;
 }

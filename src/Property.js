@@ -4,16 +4,28 @@ import Button from '@material-ui/core/Button';
 import { useStateValue } from './StateProvider';
 
 
-function Property({propertyObj}){
+function Property({image, address, price, num_bed_rooms, num_wash_rooms, num_parking_slots, kitchen, min_lease_term, utilities, available_from, video_tour_link, user_name, user_email, user_phone}){
 
     const [state, dispatch] = useStateValue();
-    const [images, setImages] = useState([]);
-    setImages(propertyObj.images);
-    const addToInterested = (propertyObj) => {
+    
+    const addToInterested = () => {
          dispatch({
             type: "ADD_TO_INTERESTED",
             item: {
-                propertyObj: propertyObj,
+                image: image,
+                address: address,
+                price: price,
+                num_bed_rooms: num_bed_rooms,
+                num_wash_rooms: num_wash_rooms,
+                num_parking_slots: num_parking_slots,
+                kitchen: kitchen,
+                min_lease_term: min_lease_term,
+                utilities: utilities,
+                available_from: available_from,
+                video_tour_link: video_tour_link,
+                user_name: user_name,
+                user_email: user_email,
+                user_phone: user_phone
             },
         });
     };
@@ -21,35 +33,36 @@ function Property({propertyObj}){
     return(
         <div className='property'>
 
-            <div className='property_images'>
-            {images.map(image =>(<img src={image} alt=""></img>))}
+            <div className='property_image'>
+            <img src={image} alt=""></img>
             </div>
 
             <div className='property_details'>
                 <p>
-                    <strong> propertyObj.address </strong>
+                    <strong> {address} </strong>
                 </p>
                 <p className='property_price'>
                     <strong>Rent: $</strong>
-                    <small>propertyObj.price per month</small>
+                    <small>{price} per month</small>
                 </p>
             </div>
             <div className='property_details_2'>
                 <p>
-                    <h3>LandLord Details:</h3>
-                    <small>Name: {propertyObj.user_name}</small>
-                    <small>Email: {propertyObj.user_email}</small>
-                    <small>Mobile: {propertyObj.user_phone}</small>
+                    <h4>LandLord Details:</h4>
+                    <small>Name: {user_name}</small> <br />
+                    <small>Email: {user_email}</small> <br />
+                    <small>Mobile: {user_phone}</small> <br />
                     <br></br>
-                    <h3>Property Details</h3>
-                    <small>Number of Bedrooms: {propertyObj.num_bed_rooms}</small>
-                    <small>Number of washrooms: {propertyObj.num_wash_rooms}</small>
-                    <small>kitchen: {propertyObj.kitchen}</small>
-                    <small>Number of parking slots: {propertyObj.num_parking_slots}</small>
-                    <small>Utilities: {propertyObj.utilities}</small>
-                    <small>Minimim lease term: {propertyObj.lease_term}</small>
-                    <small>Available from: {propertyObj.available_from}</small>
-                    <small>Video tour link: {propertyObj.video_tour_link}</small>
+                    <h4>Property Details</h4>
+                    <small>Number of Bedrooms: {num_bed_rooms}</small> <br />
+                    <small>Number of washrooms: {num_wash_rooms}</small> <br />
+                    <small>kitchen: {kitchen}</small> <br />
+                    <small>Number of parking slots: {num_parking_slots}</small> <br />
+                    <small>Utilities: {utilities}</small> <br />
+                    <small>Minimim lease term: {min_lease_term}</small> <br />
+                    <small>Available from: {available_from}</small> <br />
+                    <small>Video tour link: {video_tour_link}</small> <br />
+                    <br />
                 </p>
             </div>
 

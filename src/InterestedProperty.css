@@ -1,4 +1,4 @@
-.property {
+.interested {
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -7,19 +7,18 @@
     padding: 20px;
     width: 100%;
     max-width: 100%;
-    max-height: 400px;
+    max-height: 850px;
     background-color: white;
     z-index: 1;
 }
 
-.property > img {
-    max-height: 200px;
-    width: 100%;
+.interested_property_image {
+    width: 80%;
     object-fit: contain;
     margin-bottom: 15px;
 }
 
-.property > button {
+.interested_property > button {
     background: darkslateblue;
     border: 1px solid;
     object-fit: contain;
@@ -33,6 +32,7 @@
 
 .property_price {
     margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .property_details{

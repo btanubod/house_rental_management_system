@@ -7,7 +7,6 @@ import { ref, listAll } from 'firebase/storage';
 function Home(){
 
     const [users, setUsers] = useState([]);
-    const [images, setImages] = useState([]);
     const [properties, setProperties] = useState([]);
     const [propertyObjList, setPropertyObjList] = useState([]);
 
@@ -78,19 +77,28 @@ function Home(){
         }
         setPropertyObjList(dupPropObjList);
 
-        console.log(propertyObjList);
-
     }  
 
     return(
         <div className='home'>
             <div className='home_container'>
                 <div className='home_row'>
-                    {propertyObjList.map(item => (
-                        <Property
-                            propertyObj={item}
-                        />
-                    ))}
+                    <Property 
+                     image= "https://pngimg.com/uploads/house/house_PNG48.png"
+                     address= "000 western"
+                     price= {1000}
+                     num_bed_rooms= {2}
+                     num_wash_rooms= {2}
+                     num_parking_slots= {3}
+                     kitchen= {2}
+                     min_lease_term= {12}
+                     utilities= "All included"
+                     available_from= "Jan 2023"
+                     video_tour_link= ""
+                     user_name= "test1"
+                     user_email= "test1@gmail.com"
+                     user_phone= "9876543210"
+                    />
                 </div>
             </div>
         </div>
