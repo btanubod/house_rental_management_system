@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Property.css';
 import Button from '@material-ui/core/Button';
 import { useStateValue } from './StateProvider';
@@ -7,7 +7,8 @@ import { useStateValue } from './StateProvider';
 function Property({propertyObj}){
 
     const [state, dispatch] = useStateValue();
-
+    const [images, setImages] = useState([]);
+    setImages(propertyObj.images);
     const addToInterested = (propertyObj) => {
          dispatch({
             type: "ADD_TO_INTERESTED",
@@ -21,7 +22,7 @@ function Property({propertyObj}){
         <div className='property'>
 
             <div className='property_images'>
-            {propertyObj.images.map(image =>(<img src={image} alt=""></img>))}
+            {images.map(image =>(<img src={image} alt=""></img>))}
             </div>
 
             <div className='property_details'>

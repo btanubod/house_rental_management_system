@@ -1,30 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Property from './Property';
 import { db, storage } from './firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { ref, listAll } from 'firebase/storage';
 
 function Home(){
-    const [properties, setProperties] = useState([]);
+
     const [users, setUsers] = useState([]);
     const [images, setImages] = useState([]);
+    const [properties, setProperties] = useState([]);
     const [propertyObjList, setPropertyObjList] = useState([]);
 
-    const Fetchdata = () => {
-        const queryProperty = getDocs(collection(db, "property"));
- 
-        Array.prototype.forEach.call(queryProperty, (element) => {
-                var data = element.data();
-                setProperties(arr=>[...arr, data]);
-            });
-            console.log(properties);
+    useEffect(() => {
+        Fetchdata();
+    }, []);
 
-        const queryUsers = getDocs(collection(db, "users"));
+    function Fetchdata(){
+
+        const queryProperty = collection(db, "property");
         
-        Array.prototype.forEach.call(queryUsers, (element) => {
-                var data = element.data();
-                setUsers(arr=>[...arr, data]);
+        getDocs(queryProperty).then((element) => {
+            const prop = element.docs.map((doc) => ({
+                    data: doc.data(),
+                }))
+                setProperties(prop);
             });
-            console.log(users);
+
+        console.log(properties);
+
+        const queryUsers = collection(db, "user");
+
+        getDocs(queryUsers).then((element) => {
+            const usr = element.docs.map((doc) => ({
+                data: doc.data(),
+            }))
+            setUsers(usr);
+        });
+        console.log(users);
+        var dupPropObjList = [];
         for(let i=0;i<properties.length;i++){
             let newPropertyObj = {
                 address: properties[i].house_num + properties[i].sub_city + properties[i].city,
@@ -47,39 +60,37 @@ function Home(){
             }
             
             var img_folder = "house_" + properties[i].id;
-
-
-            storage.ref().child(img_folder).list_All()
-                .then(res => {
-                    res.items.forEach((item) => {
-                        setImages(arr => [...arr, item]);
-                    })
-                })
-                .catch(err => {
+            var images = [];
+            const listRef = ref(storage, img_folder);
+            listAll(listRef).then((res) => {
+                images = res.items.forEach((itemRef) => ({
+                    itemRef,
+                }))
+            })
+            .catch(err => {
                     alert(err.message);
-                })
+            })
             
             newPropertyObj.images = images;
 
-            this.setState(previousState => ({
-                propertyObjList: [...previousState.propertyObjList, newPropertyObj]
-            }));
+            dupPropObjList = [...dupPropObjList, newPropertyObj];
+        
         }
+        setPropertyObjList(dupPropObjList);
+
         console.log(propertyObjList);
 
-    }
+    }  
 
     return(
         <div className='home'>
             <div className='home_container'>
                 <div className='home_row'>
-                    <Fetchdata />
                     {propertyObjList.map(item => (
                         <Property
                             propertyObj={item}
                         />
                     ))}
-                    
                 </div>
             </div>
         </div>
