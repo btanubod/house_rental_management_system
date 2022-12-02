@@ -1,28 +1,54 @@
+import React, { useEffect } from 'react';
+import {
+        BrowserRouter as Router,
+        Routes,
+        Route
+      } from 'react-router-dom';
 import './App.css';
+import Header from './Header';
+import Home from './Home';
+import SearchProperty from './SearchProperty';
+import SignIn from './SignIn';
+import ViewInterestedProperties from './ViewInterestedProperties'
+import AboutUS from './AboutUS';
+import AddProperty from './AddProperty';
+import { auth } from './firebase';
+import { useStateValue } from './StateProvider';
 
 function App() {
+
+    const [{user}, dispatch] = useStateValue();
+
+    useEffect(() => {
+      auth.onAuthStateChanged((authUser) => {
+        console.log("THE USER IS >>> ", authUser);
+
+        if (authUser) {
+          dispatch({
+            type: "SET_USER",
+            user: authUser,
+          });
+        } else {
+          dispatch({
+            type: "SET_USER",
+            user: null,
+          });
+        }
+      });
+    }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <Router>
+        <div className="app">
+            <Routes>
+                <Route exact path="/signin" element={<SignIn />} />
+                <Route exact path="/viewinterested" element={<><Header /><ViewInterestedProperties /></>} />
+                <Route exact path="/aboutus" element={<><Header /><AboutUS /></>} />
+                <Route exact path="/addproperty" element={<><Header /><AddProperty /></>} />
+                <Route exact path="/" element={<><Header /><Home /></>} />
+            </Routes>
+        </div>
+    </Router>
   );
 }
 

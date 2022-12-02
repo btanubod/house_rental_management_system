@@ -1,0 +1,8 @@
+.viewinterested_property {
+    display: flex;
+    padding: 25px;
+    margin-right: 15px;
+    margin-top: 20px;
+    background-color: white;
+    height: max-content;
+}
